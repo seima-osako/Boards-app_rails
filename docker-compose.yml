@@ -1,0 +1,23 @@
+# 複数のコンテナを設定に従ってまとめて起動するために定義するファイル
+version: '3'
+services:
+  web:
+    build: . # docker-compose.ymlと同じディレクトリにあるDockerfileの元にイメージを作成することを意味する。
+    command: bundle exec rails s -p 3000 -b '0.0.0.0' # コンテナを起動したときにデフォルトで実行されるrailsのwebサーバーを起動するためのコマンド
+    volumes: # docker-compose.yml上のディレクトリをappディレクトにマウント(app/に共有される)=pc上で修正したコードが即座に反映されるように。
+      - .:/app
+    ports:
+      - 3000:3000 # コンテナの外部に明示的に3000ポートを公開  ＜公開するポート番号＞：＜コンテナ内部の転送先ポート番号＞
+    depends_on:
+      - db # railsサーバーが起動される前にmysqlサーバーが起動するように設定
+    tty: true # pryを使用してデバッグするために必要
+    stdin_open: true # pryを使用してデバッグするために必要
+  db:
+    image: mysql:5.7
+    volumes:
+      - db-volume:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+volumes:
+  db-volume: # この定義によりpc上にdb-volumeという名前でボリューム（データ保持領域）が作成される=コンテナを作り直してもデータが保持される。
+
