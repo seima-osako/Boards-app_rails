@@ -6,14 +6,21 @@ class BoardsController < ApplicationController
   end
   
   def new
-    @board = Board.new
+    @board = Board.new(flash[:board])
   end
 
   def create
-    board = Board.create(board_params)
-    flash[:notice] = "「#{board.title}」の掲示板を作成しました"
-    # idが付与されているため、そのURLにリダイレクトするように設定
-    redirect_to board
+    board = Board.new(board_params)
+    if board.save
+      flash[:notice] = "「#{board.title}」の掲示板を作成しました"
+      # idが付与されているため、そのURLにリダイレクトするように設定
+      redirect_to board
+    else
+      redirect_to new_board_path, flash: {
+        board: board,
+        error_messages: board.errors.full_messages
+      }
+    end
   end
   
   def show
