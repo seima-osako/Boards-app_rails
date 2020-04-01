@@ -4,6 +4,11 @@
     <%= link_to '編集', edit_board_path(@board), class: 'btn btn-outline-dark' %>
   </div>
 </div>
+
+<% if flash[:notice] %>
+  <div class="alert alert-primary"><%= flash[:notice] %></div>
+<% end %>
+
 <!-- object: @boardとした場合、パーシャル名(board)と同名のローカル変数が作成されて渡される。 -->
 <!-- <%= render partial: 'board', object: @board %> -->
 <%= render @board %>
