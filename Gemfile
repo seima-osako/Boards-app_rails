@@ -31,7 +31,6 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 gem 'bootstrap', '~> 4.0.0'
-gem 'mini_racer'
 gem 'kaminari'
 gem 'rails-i18n'
 
@@ -48,6 +47,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'pry-byebug'
+  gem 'annotate'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
