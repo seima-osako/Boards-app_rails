@@ -37,8 +37,7 @@ class BoardsController < ApplicationController
   end
 
   def destroy
-    @board.delete
-
+    @board.destroy
     redirect_to boards_path, flash: { notice: "「#{@board.title}」の掲示板が削除されました" }
   end
 
@@ -47,7 +46,7 @@ class BoardsController < ApplicationController
   # 意図していないデータを混ぜてpostされた場合に丸ごと保存するとセキュリティリスクになる
 
   def board_params
-    params.require(:board).permit(:name, :title, :body)
+    params.require(:board).permit(:name, :title, :body, tag_ids: [])
   end
 
   # プライベートで設定する関数

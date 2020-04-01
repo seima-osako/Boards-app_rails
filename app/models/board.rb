@@ -11,7 +11,7 @@
 #
 class Board < ApplicationRecord
   has_many :comments # 複数形 
-  has_many :board_tag_relations
+  has_many :board_tag_relations, dependent: :delete_all # 関連付けが削除される
   has_many :tags, through: :board_tag_relations
   
   validates :name, presence: true, length: { maximum: 10 }
